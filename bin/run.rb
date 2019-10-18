@@ -2,4 +2,8 @@ require_relative '../config/environment'
 
 
 
-puts "HELLO WORLD"
+puts "WELCOME TO TRIVIAL TUBE QUIZ"
+
+
+
+
