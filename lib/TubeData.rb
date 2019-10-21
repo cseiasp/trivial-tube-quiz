@@ -20,7 +20,7 @@ class TubeData
         import_data(path).map do |sl| 
             station_id = Station.find_by(name: sl["Name"]).id
             line_id = Line.find_by( name:sl["Line"]).id
-            Stop.new(station_id: station_id, line_id: line_id)
+            Stop.create(station_id: station_id, line_id: line_id)
         end
 
     end
