@@ -28,6 +28,12 @@ def self.user_choice
     if @user_choice == "game"
         @score = 0
         play
+    elsif @user_choice == "leaderboard" || @user_choice == "lb"
+        puts "Checking the leaderboard"
+        print_leaderboard
+    else 
+        puts "Invalid command."
+        user_choice
     end
 end
 
@@ -42,6 +48,17 @@ def self.play
         puts "WRONG! Your final score is #{@score}"
         Score.create(user_id: @user.id, score: @score)
         return user_choice
+    end
+end
+
+def self.print_leaderboard
+    scores = Score.all.sort_by{|score| -score.score.to_i}
+    puts "Position             Username            Score"
+
+    scores.each_with_index do | score, index |
+        username = User.find_by(id: score.user_id).username
+        puts "#{index + 1}.                      #{username}                 #{score.score}"
+
     end
 end
     
