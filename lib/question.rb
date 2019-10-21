@@ -13,7 +13,6 @@ class Question
 
         answer.include?(user_input) ? win = true : win = false
 
-        puts "#{win}"
         win
     end
 
@@ -28,7 +27,6 @@ class Question
         answer = Line.most_stops(line_1, line_2)
         answer == user_input ? win = true : win = false
 
-        puts "#{win}"
         win
     end
 
@@ -42,8 +40,7 @@ class Question
         answer = station.lines.size.to_s
         answer == user_input ? win = true : win = false
 
-        puts "#{win}"
-        wi
+        win
     end
 
     def self.station_beginning_with_x
@@ -58,7 +55,6 @@ class Question
 
         answer.include?(user_input) ? win = true : win = false
 
-        puts "#{win}"
         win
 
     end
@@ -77,7 +73,6 @@ class Question
 
         answer.include?(user_input) ? win = true : win = false
 
-        puts "#{win}"
         win
 
     end
@@ -94,25 +89,23 @@ class Question
 
         answer.include?(user_input) ? win = true : win = false
 
-        puts "#{win}"
         win
 
     end
 
     def self.ask_random_question
-        puts questions_3.sample
+         questions.sample.call
     end
 
-    def self.questions_2
+    def self.questions
         array = [
-   which_line_is_station_on,
-   which_line_has_more_stations,
-   how_many_lines_go_through,
-   station_beginning_with_x,
-   station_beginning_with_x_on_line_y,
-   which_zone_is_x_station_in
+   method(:which_line_is_station_on),
+   method(:which_line_has_more_stations),
+   method(:how_many_lines_go_through),
+   method(:station_beginning_with_x),
+   method(:station_beginning_with_x_on_line_y),
+   method(:which_zone_is_x_station_in)
    ]
-
    end
 
 

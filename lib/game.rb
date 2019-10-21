@@ -33,15 +33,15 @@ end
 
 
 def self.play
-    question = Question.which_line_has_more_stations
+    question = Question.ask_random_question
     if question
         @score += 1
-        p "Correct! Your score is #{@score}"
+        p "Correct! Your score is now #{@score}"
         play
     else
-        puts "WRONG! Your score is #{@score}"
+        puts "WRONG! Your final score is #{@score}"
         Score.create(user_id: @user.id, score: @score)
-        user_choice
+        return user_choice
     end
 end
     
