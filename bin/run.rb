@@ -1,12 +1,12 @@
 require_relative '../config/environment'
 
+Game.print_leaderboard
 
+# puts "WELCOME TO TRIVIAL TUBE QUIZ"
 
-puts "WELCOME TO TRIVIAL TUBE QUIZ"
-
-Game.welcome
+# Game.welcome
  
-Game.user_choice
+# Game.user_choice
 
 
 
