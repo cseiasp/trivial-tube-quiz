@@ -7,7 +7,7 @@ class Question
 
         puts "Which line is #{station.name} on?"
 
-        user_input = gets.chomp
+        user_input = STDIN.gets.chomp
 
         answer = Line.lines_names_of_station(station.id)
 
@@ -22,7 +22,7 @@ class Question
 
         puts "Which of these two lines has the most stops? #{line_1.name} or #{line_2.name}"
 
-        user_input = gets.chomp
+        user_input = STDIN.gets.chomp
 
         answer = Line.most_stops(line_1, line_2)
         answer == user_input ? win = true : win = false
@@ -35,7 +35,7 @@ class Question
 
         puts "How many lines go through #{station.name}?"
 
-        user_input = gets.chomp
+        user_input = STDIN.gets.chomp
 
         answer = station.lines.size.to_s
         answer == user_input ? win = true : win = false
@@ -49,7 +49,7 @@ class Question
 
         puts "Name a Station beginning with #{letter}"
 
-        user_input = gets.chomp
+        user_input = STDIN.gets.chomp
 
         answer = Station.station_names_by_letter(letter)
 
@@ -69,7 +69,7 @@ class Question
 
         puts "Name a Station beginning with #{letter} on the #{line} line."
 
-        user_input = gets.chomp
+        user_input = STDIN.gets.chomp
 
         answer.include?(user_input) ? win = true : win = false
 
@@ -85,7 +85,7 @@ class Question
 
         puts "Which zone is #{station.name} in?"
 
-        user_input = gets.chomp.to_i
+        user_input = STDIN.gets.chomp.to_i
 
         answer.include?(user_input) ? win = true : win = false
 
@@ -107,7 +107,5 @@ class Question
    method(:which_zone_is_x_station_in)
    ]
    end
-
-
 
 end
