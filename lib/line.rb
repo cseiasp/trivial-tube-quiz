@@ -4,7 +4,16 @@ class Line < ActiveRecord::Base
 
 
     def self.most_stops(line_1, line_2)
-        
+        result = line_1.stations.size <=> line_2.stations.size
+        if result == -1
+            answer = line_2.name
+        elsif result == 1
+            answer = line_1.name
+        else
+            answer = "same"
+        end
+        puts "#{answer}"
+        answer
     end
 
     # Create an array of station instances on a line by id
