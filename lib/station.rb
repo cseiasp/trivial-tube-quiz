@@ -53,5 +53,13 @@ class Station < ActiveRecord::Base
         line = station.lines.sample.name
         pair = [station.name, line]
     end
+    
+    def self.zone_of_station(station)
+        if station.zone % 1 == 0
+            return [station.zone.to_i]
+        else 
+            return [station.zone.to_i, station.zone.to_i + 1]
+        end
+    end
 
 end

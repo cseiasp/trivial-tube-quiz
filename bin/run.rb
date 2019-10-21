@@ -8,7 +8,9 @@ puts "WELCOME TO TRIVIAL TUBE QUIZ"
 
 # Question.station_beginning_with_x
 
-Question.station_beginning_with_x_on_line_y
+#Question.station_beginning_with_x_on_line_y
+
+Question.which_zone_is_x_station_in
 
 
 

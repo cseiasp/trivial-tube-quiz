@@ -50,6 +50,22 @@ class Question
 
     end
 
+    def self.which_zone_is_x_station_in
+
+        station = Station.all.sample
+
+        answer = Station.zone_of_station(station)
+
+        puts "Which zone is #{station.name} in?"
+
+        user_input = gets.chomp.to_i
+
+        answer.include?(user_input) ? win = true : win = false
+
+        puts "#{win}"
+
+    end
+
 
 
 
