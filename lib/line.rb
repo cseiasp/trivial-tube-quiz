@@ -12,7 +12,6 @@ class Line < ActiveRecord::Base
         else
             answer = "same"
         end
-        puts "#{answer}"
         answer
     end
 

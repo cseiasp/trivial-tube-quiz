@@ -14,6 +14,7 @@ class Question
         answer.include?(user_input) ? win = true : win = false
 
         puts "#{win}"
+        win
     end
 
     def self.which_line_has_more_stations
@@ -28,6 +29,7 @@ class Question
         answer == user_input ? win = true : win = false
 
         puts "#{win}"
+        win
     end
 
     def self.how_many_lines_go_through
@@ -41,6 +43,8 @@ class Question
         answer == user_input ? win = true : win = false
 
         puts "#{win}"
+        wi
+    end
 
     def self.station_beginning_with_x
         station = Station.all.sample
@@ -55,6 +59,7 @@ class Question
         answer.include?(user_input) ? win = true : win = false
 
         puts "#{win}"
+        win
 
     end
 
@@ -73,6 +78,7 @@ class Question
         answer.include?(user_input) ? win = true : win = false
 
         puts "#{win}"
+        win
 
     end
 
@@ -89,9 +95,25 @@ class Question
         answer.include?(user_input) ? win = true : win = false
 
         puts "#{win}"
+        win
 
     end
 
+    def self.ask_random_question
+        puts questions_3.sample
+    end
+
+    def self.questions_2
+        array = [
+   which_line_is_station_on,
+   which_line_has_more_stations,
+   how_many_lines_go_through,
+   station_beginning_with_x,
+   station_beginning_with_x_on_line_y,
+   which_zone_is_x_station_in
+   ]
+
+   end
 
 
 

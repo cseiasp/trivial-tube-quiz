@@ -2,17 +2,6 @@ class Station < ActiveRecord::Base
     has_many :stops
     has_many :lines, through: :stops
 
-    # Methods for randomly generating a first letter from all stations
-
-    # Create a unique array containing starting letters of all stations
-    def self.create_starting_stations_array
-        station_name_arrays = Station.all.map{|station| station.name[0]}.uniq
-    end
-    
-    # Create a unique array containing the starting letters of the stations on a line
-    def self.create_starting_stations_by_line_array(line_id)
-        station_names_on_line(line_id).map{|station| station[0]}.uniq
-    end
 
     # Create an array of station names starting with a particular letter
     def self.stations_by_letter(letter)
