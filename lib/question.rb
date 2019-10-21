@@ -41,6 +41,55 @@ class Question
         answer == user_input ? win = true : win = false
 
         puts "#{win}"
+
+    def self.station_beginning_with_x
+        station = Station.all.sample
+        letter = station.name[0]
+
+        puts "Name a Station beginning with #{letter}"
+
+        user_input = gets.chomp
+
+        answer = Station.station_names_by_letter(letter)
+
+        answer.include?(user_input) ? win = true : win = false
+
+        puts "#{win}"
+
+    end
+
+    def self.station_beginning_with_x_on_line_y
+        station = Station.all.sample
+        letter = station.name[0]
+
+        answer = Station.stations_on_line_by_letter(letter)
+
+        line = answer[1]
+
+        puts "Name a Station beginning with #{letter} on the #{line} line."
+
+        user_input = gets.chomp
+
+        answer.include?(user_input) ? win = true : win = false
+
+        puts "#{win}"
+
+    end
+
+    def self.which_zone_is_x_station_in
+
+        station = Station.all.sample
+
+        answer = Station.zone_of_station(station)
+
+        puts "Which zone is #{station.name} in?"
+
+        user_input = gets.chomp.to_i
+
+        answer.include?(user_input) ? win = true : win = false
+
+        puts "#{win}"
+
     end
 
 
