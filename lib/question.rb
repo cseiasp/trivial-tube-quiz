@@ -13,6 +13,6 @@ class Question
 
         answer.include?(user_input) ? win = true : win = false
 
-       puts "#{win}"
+        puts "#{win}"
     end
 end

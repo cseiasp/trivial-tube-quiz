@@ -1,10 +1,10 @@
 require_relative '../config/environment'
 
-Station.create(name: "Moorgate")
-Station.create(name: "Embankment")
-Station.create(name: "Notting Hill Gate")
-Station.create(name: "Edgware Road")
-Station.create(name: "Mile End")
+Station.create(name: "Moorgate", zone: 1 )
+Station.create(name: "Embankment", zone: 1 )
+Station.create(name: "Notting Hill Gate", zone: 1.5 )
+Station.create(name: "Edgware Road", zone: 1 )
+Station.create(name: "Mile End", zone: 2 )
 
 Line.create(colour: "Black", name: "Northern")
 Line.create(colour: "Brown", name: "Bakerloo")

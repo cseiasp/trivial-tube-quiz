@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 5) do
 
   create_table "stations", force: :cascade do |t|
     t.string "name"
-    t.string "zone"
+    t.float "zone"
   end
 
   create_table "stops", force: :cascade do |t|
