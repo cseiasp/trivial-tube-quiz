@@ -19,19 +19,24 @@ def self.welcome
     @user_input = gets.chomp
     puts "Hello #{@user_input}"
     @user = User.find_or_create_by(username: @user_input)
-
 end
 
 def self.user_choice
-    puts "Play game or view Leaderboard?"
-    @user_choice = gets.chomp
-    if @user_choice == "game"
+    puts "Play game [play], view Leaderboard [lb], change User [change] or Exit [e]?"
+    @user_choice = gets.chomp.downcase
+    if @user_choice == "play"
         @score = 0
         play
     elsif @user_choice == "leaderboard" || @user_choice == "lb"
         puts "Checking the leaderboard"
         print_leaderboard
-    else 
+        user_choice
+    elsif @user_choice == "change" || @user_choice == "change user"
+        welcome
+    elsif @user_choice == "e" || @user_choice == "exit"
+        puts "Thank you for playing, #{@user_input}. Play again soon!"
+        print_train
+    else
         puts "Invalid command."
         user_choice
     end
@@ -60,6 +65,18 @@ def self.print_leaderboard
         puts "#{index + 1}.                      #{username}                 #{score.score}"
 
     end
+end
+
+def self.print_train
+    puts "___________   _______________________________________^__ "
+    puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\ "
+    puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\ "
+    puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\ "
+    puts "           |||                    |___|___| |  |__|         ) "
+    puts "___________|||______________________________|______________/ "
+    puts "           |||                                        /-------- "
+    puts "-----------'''---------------------------------------' "
+
 end
     
 end

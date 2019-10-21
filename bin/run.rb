@@ -1,6 +1,9 @@
 require_relative '../config/environment'
 
 
+Game.print_train
+
+   
 
 puts "WELCOME TO TRIVIAL TUBE QUIZ"
 
