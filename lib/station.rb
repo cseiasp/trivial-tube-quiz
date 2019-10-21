@@ -47,8 +47,11 @@ class Station < ActiveRecord::Base
 
 
     # Creates and array of station begining with with a particular letter on a particular line
-    def self.stations_on_line_by_letter(letter, line_id)
-       station_names_on_line(line_id) & station_names_by_letter(letter)
+    def self.stations_on_line_by_letter(letter)
+
+        station = Station.stations_by_letter(letter).sample
+        line = station.lines.sample.name
+        pair = [station.name, line]
     end
 
 end
