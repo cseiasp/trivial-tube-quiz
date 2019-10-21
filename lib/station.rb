@@ -42,7 +42,7 @@ class Station < ActiveRecord::Base
 
     #Create an array of station names on a particular line
     def self.station_names_on_line(line_id)
-        station_id_array_by_line(line_id).map {|station_id| Station.all.find_by(id:station_id).name}
+        station_id_array_by_line(line_id).map {|station_id| Station.find_by(id:station_id).name}
     end
 
 
