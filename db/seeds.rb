@@ -1,10 +1,6 @@
 require_relative '../config/environment'
 
-Station.create(name: "Moorgate", zone: 1 )
-Station.create(name: "Embankment", zone: 1 )
-Station.create(name: "Notting Hill Gate", zone: 1.5 )
-Station.create(name: "Edgware Road", zone: 1 )
-Station.create(name: "Mile End", zone: 2 )
+TubeData.seed_data_zones("db/station_zone.csv")
 
 Line.create(colour: "Black", name: "Northern")
 Line.create(colour: "Brown", name: "Bakerloo")
