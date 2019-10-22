@@ -20,8 +20,9 @@ class Question
 
         question = "Which line is #{station.name} on?"
         answer = Line.lines_names_of_station(station.id)
+        hints = Hint.generate_line_hint(answer)
 
-        compare_answers(question, answer)
+        compare_answers(question, answer, hints)
     end
 
     def self.which_line_has_more_stations
