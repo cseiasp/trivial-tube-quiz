@@ -4,6 +4,8 @@ require_relative '../config/environment'
 class Game < ActiveRecord::Base  
     
     def self.welcome
+        print_train
+        puts "\nWELCOME TO TRIVIAL TUBE QUIZ\n\n"
         prompt = TTY::Prompt.new
         @user_input = prompt.ask("What is your name?")
         puts "Hello #{@user_input}"
@@ -24,9 +26,6 @@ class Game < ActiveRecord::Base
                     welcome
                 elsif @user_choice == "Exit" 
                     exit
-                else
-                    puts "Invalid command."
-                    user_choice
         end
     end
 
