@@ -50,6 +50,7 @@ class Game < ActiveRecord::Base
         if question
             @score += 1
             p "Correct! Your score is now #{@score}"
+            sleep(1)
             play
         else
             puts "\n --- WRONG! Your final score is #{@score} ---\n \n"
