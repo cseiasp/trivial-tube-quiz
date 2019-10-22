@@ -90,7 +90,8 @@ class Question
             method(:how_many_lines_go_through),
             method(:station_beginning_with_x),
             method(:station_beginning_with_x_on_line_y),
-            method(:which_zone_is_x_station_in)
+            method(:which_zone_is_x_station_in),
+            method(:what_colour_is_this_line?)
             ]
     end
 

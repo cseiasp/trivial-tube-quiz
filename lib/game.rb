@@ -50,9 +50,10 @@ class Game < ActiveRecord::Base
         if question
             @score += 1
             p "Correct! Your score is now #{@score}"
+
             play
         else
-            puts "\n --- WRONG! Your final score is #{@score} ---\n \n"
+            puts "\n --- WRONG! Your final score is #{@score} --- \n \n"
             Score.create(user_id: @user.id, score: @score)
             return user_choice
         end
@@ -93,8 +94,8 @@ class Game < ActiveRecord::Base
         puts "___________   _______________________________________^__        ".yellow 
         puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\     ".green
         puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    ".cyan
-        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   ".blue
-        puts "           |||                    |___|___| |  |__|         )   Dont miss the stop!".magenta
+        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   Don't miss the stop!".blue
+        puts "           |||                    |___|___| |  |__|         )   You are currently on stop #{@score}.".magenta
         puts "___________|||______________________________|______________/    ".red
         puts "           |||                                        /-------- ".yellow
         puts "-----------'''---------------------------------------'          ".yellow
