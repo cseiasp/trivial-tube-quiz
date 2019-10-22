@@ -8,7 +8,7 @@ class Game < ActiveRecord::Base
         system('clear')
         print_train_welcome
         prompt = TTY::Prompt.new
-        @user_input = prompt.ask("What is your name?")
+        @user_input = prompt.ask("Welcome to the Trivial Tube Quiz. What is your name?")
         puts "Hello #{@user_input}"
         @user = User.find_or_create_by(username: @user_input)
         user_choice
@@ -31,24 +31,28 @@ class Game < ActiveRecord::Base
     end
 
     def self.view_leaderboard
+        system('clear')
         puts "Checking the leaderboard...\n"
         print_leaderboard
         user_choice
     end
 
     def self.exit
+        system('clear')
         puts "Thank you for playing, #{@user_input}. Play again soon!"
-        print_train
+        print_train_exit
     end
 
     def self.play
+        system('clear')
+        print_train
         question = Question.ask_random_question
         if question
             @score += 1
             p "Correct! Your score is now #{@score}"
             play
         else
-            puts "WRONG! Your final score is #{@score}"
+            puts "\n --- WRONG! Your final score is #{@score} ---\n \n"
             Score.create(user_id: @user.id, score: @score)
             return user_choice
         end
@@ -72,7 +76,7 @@ class Game < ActiveRecord::Base
 
     
     
-    def self.print_train
+    def self.print_train_exit
         
         puts "___________   _______________________________________^__        ".yellow 
         puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\     ".green
@@ -84,16 +88,28 @@ class Game < ActiveRecord::Base
         puts "-----------'''---------------------------------------'          ".yellow
         puts " \n                                             \n"
     end
+    def self.print_train
+        
+        puts "___________   _______________________________________^__        ".yellow 
+        puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\     ".green
+        puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    ".cyan
+        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   ".blue
+        puts "           |||                    |___|___| |  |__|         )   Dont miss the stop!".magenta
+        puts "___________|||______________________________|______________/    ".red
+        puts "           |||                                        /-------- ".yellow
+        puts "-----------'''---------------------------------------'          ".yellow
+        puts " \n                                             \n"
+    end
     
     def self.print_train_welcome
-        puts "___________   _______________________________________^__                                                                       ".yellow
-        puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\       __      __       .__                                         ".green       
-        puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\     /  \\    /  \\ ____ |  |    ____  ____   _____   ____         ".cyan
-        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\    \\   \\/\\/   // __ \\|  |  _/ ___\\/  _ \\ /     \\_/ __ \\  ".blue
-        puts "           |||                    |___|___| |  |__|         )    \\        / \\ ___/|  |_ \\  \\__(  <_> )  Y Y  \\  ___/      ".magenta
-        puts "___________|||______________________________|______________/      \\__/\\  /   \\___  >____/\\___  >____/|__|_|  /\\___  >     ".red
-        puts "           |||                                        /--------        \\/        \\/          \\/            \\/     \\/      ".yellow
-        puts "-----------'''---------------------------------------'                                                                         ".yellow
+        puts "________   _______________________________________^__ ".yellow
+        puts "_   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\      __      __       .__ ".green       
+        puts " | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    /  \\    /  \\ ____ |  |    ____  ____   _____   ____ ".cyan
+        puts "_| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   \\   \\/\\/   // __ \\|  |  _/ ___\\/  _ \\ /     \\_/ __ \\".blue
+        puts "        |||                    |___|___| |  |__|         )   \\        / \\ ___/|  |_ \\  \\__(  <_> )  Y Y  \\  ___/".magenta
+        puts "________|||______________________________|______________/     \\__/\\  /   \\___  >____/\\___  >____/|__|_|  /\\___  >".red
+        puts "        |||                                        /-----------    \\/        \\/          \\/            \\/     \\/  ".yellow
+        puts "--------'''---------------------------------------' ".yellow
     end
    
 
