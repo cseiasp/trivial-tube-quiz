@@ -4,6 +4,7 @@ require_relative '../config/environment'
 class Game < ActiveRecord::Base  
     
     def self.welcome
+        system('clear')
         print_train
         puts "\nWELCOME TO TRIVIAL TUBE QUIZ\n\n"
         prompt = TTY::Prompt.new
