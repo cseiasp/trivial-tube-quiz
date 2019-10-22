@@ -45,9 +45,9 @@ class Station < ActiveRecord::Base
     
     def self.zone_of_station(station)
         if station.zone % 1 == 0
-            return [station.zone.to_i]
+            return [(station.zone.to_i).to_s]
         else 
-            return [station.zone.to_i, station.zone.to_i + 1]
+            return [(station.zone.to_i).to_s, (station.zone.to_i + 1).to_s]
         end
     end
 

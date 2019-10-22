@@ -3,9 +3,14 @@ require 'pry'
 
 class Question 
 
-    def self.compare_answers (question, answer)
+    
+
+    def self.compare_answers (question, answer, hints=nil)
         puts question
         user_input = STDIN.gets.chomp
+
+        user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
+        
         answer.include?(user_input) ? win = true : win = false
         win
     end
@@ -15,8 +20,9 @@ class Question
 
         question = "Which line is #{station.name} on?"
         answer = Line.lines_names_of_station(station.id)
+        hints = Hint.generate_line_hint(answer)
 
-        compare_answers(question, answer)
+        compare_answers(question, answer, hints)
     end
 
     def self.which_line_has_more_stations
@@ -34,8 +40,9 @@ class Question
 
         question = "How many lines go through #{station.name}?"
         answer = [station.lines.size.to_s]
-
-        compare_answers(question, answer)
+        hints = Hint.generate_numerical_hint(answer)
+ 
+        compare_answers(question, answer, hints)
     end
 
     def self.station_beginning_with_x
@@ -44,8 +51,9 @@ class Question
 
         question = "Name a Station beginning with #{letter}"
         answer = Station.station_names_by_letter(letter)
+        hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer)
+        compare_answers(question, answer, hints)
     end
 
     def self.station_beginning_with_x_on_line_y
@@ -55,17 +63,19 @@ class Question
         answer = Station.stations_on_line_by_letter(letter)
         line = answer[1]
         question = "Name a Station beginning with #{letter} on the #{line} line."
+        hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer)
+        compare_answers(question, answer, hints)
     end
 
     def self.which_zone_is_x_station_in
         station = Station.all.sample
 
         question = "Which zone is #{station.name} in?"
-        answer = Station.zone_of_station(station).to_s
-        
-        compare_answers(question, answer)
+        answer = Station.zone_of_station(station)
+        hints = Hint.generate_numerical_hint(answer)
+
+        compare_answers(question, answer, hints)
     end
 
     def self.ask_random_question
