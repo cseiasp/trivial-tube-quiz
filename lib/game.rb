@@ -9,7 +9,7 @@ class Game < ActiveRecord::Base
         print_train_welcome
         prompt = TTY::Prompt.new
         @user_input = prompt.ask("Welcome to the Trivial Tube Quiz. What is your name?")
-        puts "Hello #{@user_input}"
+        puts "\nHello #{@user_input} \n \n"
         @user = User.find_or_create_by(username: @user_input)
         user_choice
     end
@@ -38,16 +38,21 @@ class Game < ActiveRecord::Base
     end
 
     def self.exit
+        #system('clear')
+        #puts "Thank you for playing, #{@user_input}. Play again soon!"
+        #print_train_exit
+        Train.moving_train(15)
+    end
+
+    def self.display_question
         system('clear')
-        puts "Thank you for playing, #{@user_input}. Play again soon!"
-        print_train_exit
+        print_train
+        @question = Question.ask_random_question
     end
 
     def self.play
-        system('clear')
-        print_train
-        question = Question.ask_random_question
-        if question
+        display_question
+        if @question
             @score += 1
             p "Correct! Your score is now #{@score}"
             sleep(1)
@@ -74,8 +79,6 @@ class Game < ActiveRecord::Base
     def self.random_colour
         [String.red, String.green, String.black, String.blue, String.magenta].sample
     end
-
-    
     
     def self.print_train_exit
         

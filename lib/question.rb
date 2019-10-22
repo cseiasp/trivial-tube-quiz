@@ -106,4 +106,16 @@ class Question
             ]
     end
 
+    def self.questions1
+        array = [
+            method(:which_line_is_station_on),
+            method(:which_line_has_more_stations),
+            method(:how_many_lines_go_through),
+            method(:station_beginning_with_x),
+            method(:station_beginning_with_x_on_line_y),
+            method(:which_zone_is_x_station_in),
+            method(:what_colour_is_this_line?)
+            ]
+    end
+
 end
