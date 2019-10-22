@@ -60,8 +60,9 @@ class Question
         station = Station.all.sample
         letter = station.name[0]
         
-        answer = Station.stations_on_line_by_letter(letter)
-        line = answer[1]
+        answer_array = Station.stations_on_line_by_letter(letter)
+        answer = answer_array[0]
+        line = answer_array[1]
         question = "Name a Station beginning with #{letter} on the #{line} line."
         hints = Hint.generate_begin_with_hint(answer)
 

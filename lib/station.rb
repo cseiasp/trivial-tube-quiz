@@ -37,10 +37,15 @@ class Station < ActiveRecord::Base
 
     # Creates and array of station begining with with a particular letter on a particular line
     def self.stations_on_line_by_letter(letter)
-
+        
         station = Station.stations_by_letter(letter).sample
         line = station.lines.sample.name
-        pair = [station.name, line]
+        
+    
+        #TODO break this up into useful methods
+        possible_stations = Line.find_by(name: line).stops.map{|stop|stop.station_id}.map{|station_id| Station.find_by(id: station_id)}.map{|station|station.name}.select{|station|station[0]==letter}
+
+        pair = [possible_stations, line]
     end
     
     def self.zone_of_station(station)
