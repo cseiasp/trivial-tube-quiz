@@ -1,6 +1,6 @@
 require_relative '../config/environment'
 
-TubeData.seed_data_zones("db/station_zone.csv")
+TubeData.seed_data_zones("db/station_zones.csv")
 
 Line.create(colour: "Black", name: "Northern")
 Line.create(colour: "Brown", name: "Bakerloo")
