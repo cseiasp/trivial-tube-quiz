@@ -29,9 +29,23 @@ class Hint
         hint_array.shuffle
     end
 
+    def self.generate_begin_with_hint(answer)
+        hint_array = generate_string_array(answer)
+        possible_hints = Station.station_names_by_letter(answer[0][0])
+        add_possible_hints(hint_array, possible_hints)
+        hint_array = first_three_letters(hint_array)
+        hint_array.shuffle
+    end
+
+    def self.first_three_letters(hint_array)
+        modified_array = hint_array.map{|hint| hint[0...3] + ".."}
+        modified_array
+    end
+
+
     def self.generate_string_array(answer)
         hint_array = []
-        hint_array << answer.sample
+        hint_array << answer[0]
     end
 
     def self.generate_int_array(answer)

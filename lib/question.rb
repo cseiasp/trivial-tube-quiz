@@ -51,8 +51,9 @@ class Question
 
         question = "Name a Station beginning with #{letter}"
         answer = Station.station_names_by_letter(letter)
+        hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer)
+        compare_answers(question, answer, hints)
     end
 
     def self.station_beginning_with_x_on_line_y
@@ -62,8 +63,9 @@ class Question
         answer = Station.stations_on_line_by_letter(letter)
         line = answer[1]
         question = "Name a Station beginning with #{letter} on the #{line} line."
+        hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer)
+        compare_answers(question, answer, hints)
     end
 
     def self.which_zone_is_x_station_in
