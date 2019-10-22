@@ -28,7 +28,7 @@ def self.user_choice
         @score = 0
         play
     elsif @user_choice == "leaderboard" || @user_choice == "lb"
-        puts "Checking the leaderboard"
+        puts "Checking the leaderboard...\n"
         print_leaderboard
         user_choice
     elsif @user_choice == "change" || @user_choice == "change user"
@@ -57,14 +57,15 @@ def self.play
 end
 
 def self.print_leaderboard
-    scores = Score.all.sort_by{|score| -score.score.to_i}
-    puts "Position             Username            Score"
+    scores = Score.all.sort_by{|score| -score.score.to_i}[0...10]
+    puts "\n"
+    printf("%-20s %-20s %-20s\n\n", "Position", "Username", "Score")
 
     scores.each_with_index do | score, index |
         username = User.find_by(id: score.user_id).username
-        puts "#{index + 1}.                      #{username}                 #{score.score}"
-
+        printf("%-20s %-20s %-20s\n", index + 1, username, score.score)
     end
+    puts "\n"
 end
 
 def self.print_train
