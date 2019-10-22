@@ -7,4 +7,6 @@ gem "sinatra-activerecord"
 gem "sqlite3", '~> 1.3.13'
 gem "pry"
 gem "require_all"
+gem "tty-prompt"
+gem "colorize"
 

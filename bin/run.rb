@@ -10,8 +10,11 @@ Game.print_train
 puts "WELCOME TO TRIVIAL TUBE QUIZ"
 
 Game.welcome
+
+
+# Game.welcome
  
-Game.user_choice
+# Game.user_choice
 
 
 
