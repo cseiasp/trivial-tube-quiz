@@ -1,60 +1,55 @@
 require_relative '../config/environment'
+require 'pry'
 
 class Question 
 
+    def compare_answers (question, answer)
+        puts question
+        user_input = STDIN.gets.chomp
+        answer.include?(user_input) ? win = true : win = false
+        win
+    end
+
     def self.which_line_is_station_on
         station = Station.all.sample
-
-        puts "Which line is #{station.name} on?"
-
-        user_input = STDIN.gets.chomp
-
         answer = Line.lines_names_of_station(station.id)
+        question = "Which line is #{station.name} on?"
 
+        user_input = STDIN.gets.chomp      
         answer.include?(user_input) ? win = true : win = false
-
         win
     end
 
     def self.which_line_has_more_stations
         line_1 = Line.all.sample
         line_2 = (Line.all - [line_1]).sample
+        answer = [Line.most_stops(line_1, line_2)]
+        question = "Which of these two lines has the most stops? #{line_1.name} or #{line_2.name}"
 
-        puts "Which of these two lines has the most stops? #{line_1.name} or #{line_2.name}"
 
         user_input = STDIN.gets.chomp
-
-        answer = Line.most_stops(line_1, line_2)
-        answer == user_input ? win = true : win = false
-
+        answer.include?(user_input) ? win = true : win = false
         win
     end
 
     def self.how_many_lines_go_through
         station = Station.all.sample
-
-        puts "How many lines go through #{station.name}?"
+        answer = [station.lines.size.to_s]
+        question = "How many lines go through #{station.name}?"
 
         user_input = STDIN.gets.chomp
-
-        answer = station.lines.size.to_s
         answer == user_input ? win = true : win = false
-
         win
     end
 
     def self.station_beginning_with_x
         station = Station.all.sample
         letter = station.name[0]
-
-        puts "Name a Station beginning with #{letter}"
+        answer = Station.station_names_by_letter(letter)
+        question = "Name a Station beginning with #{letter}"
 
         user_input = STDIN.gets.chomp
-
-        answer = Station.station_names_by_letter(letter)
-
         answer.include?(user_input) ? win = true : win = false
-
         win
 
     end
@@ -62,33 +57,23 @@ class Question
     def self.station_beginning_with_x_on_line_y
         station = Station.all.sample
         letter = station.name[0]
-
         answer = Station.stations_on_line_by_letter(letter)
-
         line = answer[1]
-
-        puts "Name a Station beginning with #{letter} on the #{line} line."
-
+        question = "Name a Station beginning with #{letter} on the #{line} line."
+        
         user_input = STDIN.gets.chomp
-
         answer.include?(user_input) ? win = true : win = false
-
         win
 
     end
 
     def self.which_zone_is_x_station_in
-
         station = Station.all.sample
-
-        answer = Station.zone_of_station(station)
-
-        puts "Which zone is #{station.name} in?"
-
-        user_input = STDIN.gets.chomp.to_i
-
+        answer = Station.zone_of_station(station).to_s
+        question = "Which zone is #{station.name} in?"
+        
+        user_input = STDIN.gets.chomp
         answer.include?(user_input) ? win = true : win = false
-
         win
 
     end
