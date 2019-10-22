@@ -5,11 +5,11 @@ class Question
 
     
 
-    def self.compare_answers (question, answer, hint=nil)
+    def self.compare_answers (question, answer, hints=nil)
         puts question
         user_input = STDIN.gets.chomp
 
-        user_input = Hint.give_hint(hint) if user_input == "h" || user_input == "hint"
+        user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
         
         answer.include?(user_input) ? win = true : win = false
         win
@@ -39,9 +39,9 @@ class Question
 
         question = "How many lines go through #{station.name}?"
         answer = [station.lines.size.to_s]
-        hint = Hint.generate_numerical_hint(answer)
-
-        compare_answers(question, answer, hint)
+        hints = Hint.generate_numerical_hint(answer)
+ 
+        compare_answers(question, answer, hints)
     end
 
     def self.station_beginning_with_x
@@ -69,9 +69,10 @@ class Question
         station = Station.all.sample
 
         question = "Which zone is #{station.name} in?"
-        answer = Station.zone_of_station(station).to_s
-        
-        compare_answers(question, answer)
+        answer = Station.zone_of_station(station)
+        hints = Hint.generate_numerical_hint(answer)
+
+        compare_answers(question, answer, hints)
     end
 
     def self.ask_random_question
