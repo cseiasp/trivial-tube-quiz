@@ -1,10 +1,6 @@
 require_relative '../config/environment'
 
-Station.create(name: "Moorgate", zone: 1 )
-Station.create(name: "Embankment", zone: 1 )
-Station.create(name: "Notting Hill Gate", zone: 1.5 )
-Station.create(name: "Edgware Road", zone: 1 )
-Station.create(name: "Mile End", zone: 2 )
+TubeData.seed_data_zones("db/station_zone.csv")
 
 Line.create(colour: "Black", name: "Northern")
 Line.create(colour: "Brown", name: "Bakerloo")
@@ -18,16 +14,7 @@ Line.create(colour: "Purple", name: "Metropolitan")
 Line.create(colour: "Dark Blue", name: "Piccadilly")
 Line.create(colour: "Turquoise", name: "Waterloo & City")
 
-Stop.create(station_id: 1 , line_id: 1)
-Stop.create(station_id: 2 , line_id: 2)
-Stop.create(station_id: 3 , line_id: 7)
-Stop.create(station_id: 4 , line_id: 3)
-Stop.create(station_id: 5 , line_id: 7)
-Stop.create(station_id: 1 , line_id: 4)
-Stop.create(station_id: 2 , line_id: 3)
-Stop.create(station_id: 2 , line_id: 1)
-Stop.create(station_id: 3 , line_id: 3)
-Stop.create(station_id: 3 , line_id: 8)
+TubeData.seed_data_lines("db/station_lines.csv")
 
 User.create(username: "Li")
 User.create(username: "Caroline")
