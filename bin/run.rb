@@ -1,5 +1,7 @@
 require_relative '../config/environment'
 
+system('clear')
+
 
 Game.print_train
 
