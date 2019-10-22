@@ -3,9 +3,14 @@ require 'pry'
 
 class Question 
 
-    def self.compare_answers (question, answer)
+    
+
+    def self.compare_answers (question, answer, hint=nil)
         puts question
         user_input = STDIN.gets.chomp
+
+        user_input = Hint.give_hint(hint) if user_input == "h" || user_input == "hint"
+        
         answer.include?(user_input) ? win = true : win = false
         win
     end
@@ -34,8 +39,9 @@ class Question
 
         question = "How many lines go through #{station.name}?"
         answer = [station.lines.size.to_s]
+        hint = Hint.generate_numerical_hint(answer)
 
-        compare_answers(question, answer)
+        compare_answers(question, answer, hint)
     end
 
     def self.station_beginning_with_x
