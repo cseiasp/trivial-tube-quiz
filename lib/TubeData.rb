@@ -25,6 +25,14 @@ class TubeData
 
     end
 
+    def self.data_with_no_stops
+        Station.all.select {|s| s.lines == []}
+    end
+
+    def self.delete_data_where_no_stops
+        data_with_no_stops.each {|s| s.delete}
+    end
+
     
 end
 

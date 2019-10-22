@@ -4,8 +4,9 @@ require_relative '../config/environment'
 class Game < ActiveRecord::Base  
     
     def self.welcome
-        print_train
-        puts "\nWELCOME TO TRIVIAL TUBE QUIZ\n\n"
+        puts "\nTRIVIAL TUBE QUIZ\n\n"
+        system('clear')
+        print_train_welcome
         prompt = TTY::Prompt.new
         @user_input = prompt.ask("What is your name?")
         puts "Hello #{@user_input}"
@@ -65,18 +66,34 @@ class Game < ActiveRecord::Base
         puts "\n"
     end
 
+    def self.random_colour
+        [String.red, String.green, String.black, String.blue, String.magenta].sample
+    end
+
     
     
     def self.print_train
-        puts "___________   _______________________________________^__ ".red
-        puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\ ".red
-        puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\ ".red
-        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\ ".red
-        puts "           |||                    |___|___| |  |__|         ) ".red
-        puts "___________|||______________________________|______________/ ".red
-        puts "           |||                                        /-------- ".red
-        puts "-----------'''---------------------------------------' ".red
+        
+        puts "___________   _______________________________________^__        ".yellow 
+        puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\     ".green
+        puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    ".cyan
+        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   ".blue
+        puts "           |||                    |___|___| |  |__|         )   MIND THE GAP WHILST YOU EXIT!".magenta
+        puts "___________|||______________________________|______________/    ".red
+        puts "           |||                                        /-------- ".yellow
+        puts "-----------'''---------------------------------------'          ".yellow
+        puts " \n                                             \n"
+    end
     
+    def self.print_train_welcome
+        puts "___________   _______________________________________^__                                                                       ".yellow
+        puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\       __      __       .__                                         ".green       
+        puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\     /  \\    /  \\ ____ |  |    ____  ____   _____   ____         ".cyan
+        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\    \\   \\/\\/   // __ \\|  |  _/ ___\\/  _ \\ /     \\_/ __ \\  ".blue
+        puts "           |||                    |___|___| |  |__|         )    \\        / \\ ___/|  |_ \\  \\__(  <_> )  Y Y  \\  ___/      ".magenta
+        puts "___________|||______________________________|______________/      \\__/\\  /   \\___  >____/\\___  >____/|__|_|  /\\___  >     ".red
+        puts "           |||                                        /--------        \\/        \\/          \\/            \\/     \\/      ".yellow
+        puts "-----------'''---------------------------------------'                                                                         ".yellow
     end
    
 

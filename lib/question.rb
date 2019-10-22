@@ -78,6 +78,17 @@ class Question
         compare_answers(question, answer, hints)
     end
 
+    def self.what_colour_is_this_line?
+        line = Line.all.sample
+
+        question = "What colour is the #{line.name} line? (Black, Brown, Yellow, Pink, Grey, Light Blue, Dark Blue, Red, Green, Purple or Turqoise)"
+        answer = line.colour
+
+        compare_answers(question, answer)
+    end
+
+    
+
     def self.ask_random_question
          questions.sample.call
     end

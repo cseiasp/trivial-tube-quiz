@@ -18,3 +18,5 @@ TubeData.seed_data_lines("db/station_lines.csv")
 
 User.create(username: "Li")
 User.create(username: "Caroline")
+
+TubeData.delete_data_where_no_stops
