@@ -63,7 +63,7 @@ class Game < ActiveRecord::Base
                 message = "Oh no! The train has left the station because your answer was WRONG! \nThe correct answer(s): #{@question.join(". ")}."
             end
             Train.moving_train(15, message, 0.08)
-            puts "\n --- Your final score is #{@score.to_s.green} --- \n \n"
+            puts "--- Your final score is #{@score.to_s.yellow} --- \n \n"
             Score.create(user_id: @user.id, score: @score)
             user_choice
         end
