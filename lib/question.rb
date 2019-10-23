@@ -10,9 +10,16 @@ class Question
         user_input = STDIN.gets.chomp
 
         user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
-        
+
+        answer = downcase_comparison(user_input, answer)
         answer.include?(user_input) ? win = true : win = false
         win
+    end
+
+    def self.downcase_comparison(user_input, answer)
+        user_input = user_input.downcase
+        answer = answer.map{|answer| answer.downcase}
+        answer
     end
 
     def self.which_line_is_station_on
@@ -83,12 +90,11 @@ class Question
         line = Line.all.sample
 
         question = "What colour is the #{line.name} line? (Black, Brown, Yellow, Pink, Grey, Light Blue, Dark Blue, Red, Green, Purple or Turqoise)"
-        answer = line.colour
+        answer = [line.colour]
 
         compare_answers(question, answer)
     end
 
-    
 
     def self.ask_random_question
          questions.sample.call
