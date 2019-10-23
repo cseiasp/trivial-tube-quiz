@@ -56,8 +56,12 @@ class Game < ActiveRecord::Base
             p "Correct! Your score is now #{@score}"
             sleep(1)
             play
-        elsif @question == false || @question == "Timer Expired"
-            message = "The train has left the station because your answer was WRONG!"
+        else 
+            if @question == "Timer Expired"
+                message = "Oh no! The train has left the station because you were too slow!"
+            else 
+                message = "Oh no! The train has left the station because your answer was WRONG! \nThe correct answer(s): #{@question.join(". ")}."
+            end
             Train.moving_train(15, message, 0.08)
             puts "\n --- Your final score is #{@score} --- \n \n"
             Score.create(user_id: @user.id, score: @score)

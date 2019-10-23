@@ -13,7 +13,8 @@ class QuestionChecker
 
     def compare_answers 
         output_question
-        process_user_input
+        response = process_user_input
+        return response if response == "Timer Expired"
         downcase_comparison
         answer_correct? ? true : process_wrong_answer
     end
@@ -21,10 +22,16 @@ class QuestionChecker
     def process_wrong_answer
         @possible_typo = spell_checker
         if typo_is_wrong_answer?
-            return false 
+            process_correct_answers
         else 
             let_user_retype
         end
+    end
+
+    def process_correct_answers
+        formatted_answers = self.answer.map do |answer|             answer.split.map(&:capitalize).join(' ')
+        end
+        return formatted_answers[0...3]
     end
 
     def process_user_input
@@ -77,6 +84,4 @@ class QuestionChecker
         )
         spell_checker.correct(self.user_input)
     end 
-
-    
 end
