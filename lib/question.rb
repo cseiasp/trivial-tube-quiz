@@ -3,42 +3,6 @@ require 'pry'
 
 class Question 
 
-    def self.rules
-        puts " - - - - - - - - - - - - - - - RULES OF THE GAME - - - - - - - - - - - - - - - "
-        puts "The game is simple, answer as many questions as you can correctly, but beware: \n\n"
-        puts "YOU ONLY HAVE 15 SECONDS TO ANSWER THIS QUESTION, SO HURRY! ".yellow
-        puts "Pro tip - you can ask for a hint if you need one... \n\n"
-        puts " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
-        puts "\nHERE IS YOUR QUESTION"
-    end
-
-    def self.compare_answers (question, answer, hints=nil)
-        user_input = Thread.new do
-            rules
-            puts question
-            Thread.current[:value] = STDIN.gets.chomp
-        end
-
-        timer = Thread.new {sleep 15; user_input.kill; puts}
-        user_input.join
-        
-        if user_input[:value]
-            user_input= Hint.give_hint(hints) if user_input[:value] == "h" || user_input[:value] == "hint"
-
-            answer, user_input = downcase_comparison(user_input[:value], answer)
-            answer.include?(user_input) ? win = true : win = false
-            timer.kill
-            return win
-        else
-            return "Timer Expired"
-        end
-    end
-
-    def self.downcase_comparison(user_input, answer)
-        user_input = user_input.downcase
-        answer = answer.map{|answer| answer.downcase}
-        return answer, user_input
-    end
 
     def self.which_line_is_station_on
         station = Station.all.sample
@@ -47,7 +11,9 @@ class Question
         answer = Line.lines_names_of_station(station.id)
         hints = Hint.generate_line_hint(answer)
 
-        compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
+
     end
 
     def self.which_line_has_more_stations
@@ -57,7 +23,8 @@ class Question
         question = "Which of these two lines has the most stops? #{line_1.name} or #{line_2.name}"
         answer = [Line.most_stops(line_1, line_2)]
         
-        compare_answers(question, answer)
+        check = QuestionChecker.new(question, answer)
+        check.compare_answers
     end
 
     def self.how_many_lines_go_through
@@ -67,7 +34,8 @@ class Question
         answer = [station.lines.size.to_s]
         hints = Hint.generate_numerical_hint(answer)
  
-        compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.station_beginning_with_x
@@ -78,7 +46,8 @@ class Question
         answer = Station.station_names_by_letter(letter)
         hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.station_beginning_with_x_on_line_y
@@ -91,7 +60,8 @@ class Question
         question = "Name a Station beginning with #{letter} on the #{line} line."
         hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.which_zone_is_x_station_in
@@ -101,7 +71,8 @@ class Question
         answer = Station.zone_of_station(station)
         hints = Hint.generate_numerical_hint(answer)
 
-        compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.what_colour_is_this_line?
@@ -109,9 +80,10 @@ class Question
 
         question = "What colour is the #{line.name} line? "
         answer = [line.colour]
-        hints = ["Black,", "Brown,", "Yellow,", "Pink,", "Grey,", "Light Blue,", "Dark Blue,", "Red,", "Green,", "Purple or", "Turquoise"]
-        
-        compare_answers(question, answer, hints)   
+        hints = ["Black,", "Brown,", "Yellow,", "Pink,", "Grey,", "Light Blue,", "Dark Blue,", "Red,", "Green,", "Purple or", "Turquoise"] 
+
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.ask_random_question

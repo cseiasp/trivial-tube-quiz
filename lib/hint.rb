@@ -11,7 +11,7 @@ class Hint
         end
 
         puts "\n"
-        user_input = STDIN.gets.chomp
+
     end
 
     def self.generate_line_hint(answer)
