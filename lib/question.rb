@@ -19,7 +19,7 @@ class Question
             Thread.current[:value] = STDIN.gets.chomp
         end
 
-        timer = Thread.new { sleep 15; user_input.kill; puts}
+        timer = Thread.new {sleep 15; user_input.kill; puts}
         user_input.join
         
         if user_input[:value]
