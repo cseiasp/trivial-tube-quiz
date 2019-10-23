@@ -53,7 +53,7 @@ class Game < ActiveRecord::Base
         display_question
         if @question == true
             @score += 1
-            p "Correct! Your score is now #{@score}"
+            puts "\nCorrect! Your score is now #{@score}".yellow
             sleep(1)
             play
         else 
@@ -63,20 +63,21 @@ class Game < ActiveRecord::Base
                 message = "Oh no! The train has left the station because your answer was WRONG! \nThe correct answer(s): #{@question.join(". ")}."
             end
             Train.moving_train(15, message, 0.08)
-            puts "\n --- Your final score is #{@score} --- \n \n"
+            puts "\n --- Your final score is #{@score.to_s.green} --- \n \n"
             Score.create(user_id: @user.id, score: @score)
             user_choice
         end
     end
     
     def self.print_leaderboard
+        the_scores
         scores = Score.all.sort_by{|score| -score.score.to_i}[0...10]
         puts "\n"
-        printf("%-20s %-20s %-20s\n\n", "Position", "Username", "Score")
+        printf("                   %-20s %-20s %-20s\n\n", "Position", "Username", "Score")
     
         scores.each_with_index do | score, index |
             username = User.find_by(id: score.user_id).username
-            printf("%-20s %-20s %-20s\n", index + 1, username, score.score)
+            printf("                   %-20s %-20s %-20s\n", index + 1, username, score.score)
         end
         puts "\n"
     end
@@ -115,6 +116,17 @@ class Game < ActiveRecord::Base
         - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n \n \n"
 
        user_choice
+    end
+
+    def self.the_scores
+
+    puts "           __  .__                                                 ".yellow      
+    puts "         _/  |_|  |__   ____        ______ ____  ___________   ____   ______".green
+    puts "         \\   __\\  |  \\_/ __ \\      /  ___// ___\\/  _ \\_  __ \\_/ __ \\ /  ___/".cyan
+    puts "          |  | |   Y  \\  ___/      \\___ \\\\  \\__(  <_> )  | \\/\\  ___/ \\___ \\ ".blue
+    puts "          |__| |___|  /\\___  >     /____  >\___  >____/|__|    \\___  >____  >".magenta
+    puts "                    \\/     \\/           \\/     \\/                 \\/     \\/ ".red
+
     end
 
     
