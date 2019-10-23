@@ -7,20 +7,27 @@ class Question
 
     def self.compare_answers (question, answer, hints=nil)
         puts question
-        user_input = STDIN.gets.chomp
 
+        user_input = STDIN.gets.chomp
         user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
 
-        answer = downcase_comparison(user_input, answer)
-        answer.include?(user_input) ? win = true : win = false
-        win
+        user_input, answer = QuestionChecker.downcase_comparison(user_input, answer)
+
+
+        if answer.include?(user_input)
+            return true
+        else
+            possible_typo = QuestionChecker.spell_checker(user_input)
+
+            if (answer - possible_typo) == answer
+                return false 
+            else 
+                puts "Did you mean: #{possible_typo.join("")}? Please type your answer again!"
+                compare_answers(question, answer, hints=nil)     
+            end
+        end
     end
 
-    def self.downcase_comparison(user_input, answer)
-        user_input = user_input.downcase
-        answer = answer.map{|answer| answer.downcase}
-        answer
-    end
 
     def self.which_line_is_station_on
         station = Station.all.sample
