@@ -19,7 +19,7 @@ class Question
             ]
     end
 
-    def self.checkQuestion(question, answer, hints)
+    def self.checkQuestion(question, answer, hints=nil)
         check = QuestionChecker.new(question, answer, hints)
         check.compare_answers
     end
@@ -41,7 +41,7 @@ class Question
         question = "Which of these two lines has the most stops? #{line_1.name} or #{line_2.name}"
         answer = [Line.most_stops(line_1, line_2)]
         
-        checkQuestion(question, answer, hints)
+        checkQuestion(question, answer)
     end
 
     def self.how_many_lines_go_through
