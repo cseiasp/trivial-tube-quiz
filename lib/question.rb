@@ -11,7 +11,7 @@ class Question
 
         user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
 
-        answer = downcase_comparison(user_input, answer)
+        answer, user_input = downcase_comparison(user_input, answer)
         answer.include?(user_input) ? win = true : win = false
         win
     end
@@ -19,7 +19,7 @@ class Question
     def self.downcase_comparison(user_input, answer)
         user_input = user_input.downcase
         answer = answer.map{|answer| answer.downcase}
-        answer
+        return answer, user_input
     end
 
     def self.which_line_is_station_on
@@ -89,30 +89,18 @@ class Question
     def self.what_colour_is_this_line?
         line = Line.all.sample
 
-        question = "What colour is the #{line.name} line? (Black, Brown, Yellow, Pink, Grey, Light Blue, Dark Blue, Red, Green, Purple or Turqoise)"
+        question = "What colour is the #{line.name} line? "
         answer = [line.colour]
-
-        compare_answers(question, answer)
+        hints = ["Black,", "Brown,", "Yellow,", "Pink,", "Grey,", "Light Blue,", "Dark Blue,", "Red,", "Green,", "Purple or", "Turquoise"]
+        
+        compare_answers(question, answer, hints)   
     end
-
 
     def self.ask_random_question
          questions.sample.call
     end
 
     def self.questions
-        array = [
-            method(:which_line_is_station_on),
-            method(:which_line_has_more_stations),
-            method(:how_many_lines_go_through),
-            method(:station_beginning_with_x),
-            method(:station_beginning_with_x_on_line_y),
-            method(:which_zone_is_x_station_in),
-            method(:what_colour_is_this_line?)
-            ]
-    end
-
-    def self.questions1
         array = [
             method(:which_line_is_station_on),
             method(:which_line_has_more_stations),

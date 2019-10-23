@@ -4,7 +4,7 @@ class Hint
 
     def self.give_hint(hints)
         if (hints == nil)
-            puts "Sorry, no hints for this question!"
+            puts "Dont be silly, you aren´t getting a hint for this question!"
         else 
             puts "Potential options: "
             hints.each {|hint| print "#{hint} "}     
@@ -41,7 +41,6 @@ class Hint
         modified_array = hint_array.map{|hint| hint[0...3] + ".."}
         modified_array
     end
-
 
     def self.generate_string_array(answer)
         hint_array = []
