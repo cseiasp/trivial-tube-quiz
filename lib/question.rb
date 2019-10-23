@@ -10,7 +10,9 @@ class Question
         answer = Line.lines_names_of_station(station.id)
         hints = Hint.generate_line_hint(answer)
 
-        QuestionChecker.compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
+
     end
 
     def self.which_line_has_more_stations
@@ -20,7 +22,8 @@ class Question
         question = "Which of these two lines has the most stops? #{line_1.name} or #{line_2.name}"
         answer = [Line.most_stops(line_1, line_2)]
         
-        QuestionChecker.compare_answers(question, answer)
+        check = QuestionChecker.new(question, answer)
+        check.compare_answers
     end
 
     def self.how_many_lines_go_through
@@ -30,7 +33,8 @@ class Question
         answer = [station.lines.size.to_s]
         hints = Hint.generate_numerical_hint(answer)
  
-        QuestionChecker.compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.station_beginning_with_x
@@ -41,7 +45,8 @@ class Question
         answer = Station.station_names_by_letter(letter)
         hints = Hint.generate_begin_with_hint(answer)
 
-        QuestionChecker.compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.station_beginning_with_x_on_line_y
@@ -54,7 +59,8 @@ class Question
         question = "Name a Station beginning with #{letter} on the #{line} line."
         hints = Hint.generate_begin_with_hint(answer)
 
-        QuestionChecker.compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.which_zone_is_x_station_in
@@ -64,7 +70,8 @@ class Question
         answer = Station.zone_of_station(station)
         hints = Hint.generate_numerical_hint(answer)
 
-        QuestionChecker.compare_answers(question, answer, hints)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
     def self.what_colour_is_this_line?
@@ -73,7 +80,8 @@ class Question
         question = "What colour is the #{line.name} line? (Black, Brown, Yellow, Pink, Grey, Light Blue, Dark Blue, Red, Green, Purple or Turqoise)"
         answer = [line.colour]
 
-        QuestionChecker.compare_answers(question, answer)
+        check = QuestionChecker.new(question, answer, hints)
+        check.compare_answers
     end
 
 

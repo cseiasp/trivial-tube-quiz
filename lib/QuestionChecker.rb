@@ -1,49 +1,65 @@
+require_relative '../config/environment'
+
 class QuestionChecker
 
-    def self.compare_answers (question, answer, hints=nil)
-        puts question
+    attr_accessor :question, :answer, :hints, :user_input, :possible_typo
 
-        user_input = STDIN.gets.chomp
-        user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
+    def initialize(question, answer, hints=nil)
+        @question = question
+        @answer = answer
+        @hints = hints
+    end
 
-        user_input, answer = downcase_comparison(user_input, answer)
+    def compare_answers 
+        output_question
+        process_user_input
+        downcase_comparison
+        answer_correct? ? true : process_wrong_answer
+    end
 
-        if answer.include?(user_input)
-            return true
-        else
-            possible_typo = spell_checker(user_input)
-
-            if typo_is_wrong_answer?(answer, possible_typo)
-                return false 
-            else 
-                let_user_retype(question, answer, possible_typo, hints=nil)   
-            end
+    def process_wrong_answer
+        @possible_typo = spell_checker
+        if typo_is_wrong_answer?
+            return false 
+        else 
+            let_user_retype
         end
     end
 
-    def self.typo_is_wrong_answer?(answer, possible_typo)
-        (answer - possible_typo) == answer
+    def process_user_input
+        @user_input = STDIN.gets.chomp
+        self.user_input = Hint.give_hint(self.hints) if self.user_input == "h" || self.user_input == "hint"
     end
 
-    def self.let_user_retype(question, answer, possible_typo, hints=nil)
-        puts "Did you mean: #{possible_typo.join("")}? Please type your answer again!"
-        compare_answers(question, answer, hints=nil) 
+    def output_question
+        puts self.question
+    end
+
+    def answer_correct?
+        self.answer.include?(self.user_input)
+    end
+
+    def typo_is_wrong_answer?
+        (self.answer - self.possible_typo) == self.answer
+    end
+
+    def let_user_retype
+        puts "Did you mean: #{self.possible_typo.join("").red}? Please type your answer again!"
+        compare_answers
     end    
 
-    def self.downcase_comparison(user_input, answer)
-        user_input = user_input.downcase
-        answer = answer.map{|answer| answer.downcase}
-        return user_input, answer
+    def downcase_comparison
+        self.user_input = self.user_input.downcase
+        self.answer = self.answer.map{|answer| answer.downcase}
     end
 
-    def self.spell_checker(user_input)
+    def spell_checker
         spell_checker = DidYouMean::SpellChecker.new(
             dictionary: [
                 station_names = Station.all.map{|station| station.name.downcase}, 
                 line_names = Line.all.map{|line| line.name.downcase}
             ].flatten
-            )
-        spell_checker.correct(user_input)
+        )
+        spell_checker.correct(self.user_input)
     end 
-
 end
