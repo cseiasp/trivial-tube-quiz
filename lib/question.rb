@@ -3,32 +3,6 @@ require 'pry'
 
 class Question 
 
-    
-
-    def self.compare_answers (question, answer, hints=nil)
-        puts question
-
-        user_input = STDIN.gets.chomp
-        user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
-
-        user_input, answer = QuestionChecker.downcase_comparison(user_input, answer)
-
-
-        if answer.include?(user_input)
-            return true
-        else
-            possible_typo = QuestionChecker.spell_checker(user_input)
-
-            if (answer - possible_typo) == answer
-                return false 
-            else 
-                puts "Did you mean: #{possible_typo.join("")}? Please type your answer again!"
-                compare_answers(question, answer, hints=nil)     
-            end
-        end
-    end
-
-
     def self.which_line_is_station_on
         station = Station.all.sample
 
@@ -36,7 +10,7 @@ class Question
         answer = Line.lines_names_of_station(station.id)
         hints = Hint.generate_line_hint(answer)
 
-        compare_answers(question, answer, hints)
+        QuestionChecker.compare_answers(question, answer, hints)
     end
 
     def self.which_line_has_more_stations
@@ -46,7 +20,7 @@ class Question
         question = "Which of these two lines has the most stops? #{line_1.name} or #{line_2.name}"
         answer = [Line.most_stops(line_1, line_2)]
         
-        compare_answers(question, answer)
+        QuestionChecker.compare_answers(question, answer)
     end
 
     def self.how_many_lines_go_through
@@ -56,7 +30,7 @@ class Question
         answer = [station.lines.size.to_s]
         hints = Hint.generate_numerical_hint(answer)
  
-        compare_answers(question, answer, hints)
+        QuestionChecker.compare_answers(question, answer, hints)
     end
 
     def self.station_beginning_with_x
@@ -67,7 +41,7 @@ class Question
         answer = Station.station_names_by_letter(letter)
         hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer, hints)
+        QuestionChecker.compare_answers(question, answer, hints)
     end
 
     def self.station_beginning_with_x_on_line_y
@@ -80,7 +54,7 @@ class Question
         question = "Name a Station beginning with #{letter} on the #{line} line."
         hints = Hint.generate_begin_with_hint(answer)
 
-        compare_answers(question, answer, hints)
+        QuestionChecker.compare_answers(question, answer, hints)
     end
 
     def self.which_zone_is_x_station_in
@@ -90,7 +64,7 @@ class Question
         answer = Station.zone_of_station(station)
         hints = Hint.generate_numerical_hint(answer)
 
-        compare_answers(question, answer, hints)
+        QuestionChecker.compare_answers(question, answer, hints)
     end
 
     def self.what_colour_is_this_line?
@@ -99,7 +73,7 @@ class Question
         question = "What colour is the #{line.name} line? (Black, Brown, Yellow, Pink, Grey, Light Blue, Dark Blue, Red, Green, Purple or Turqoise)"
         answer = [line.colour]
 
-        compare_answers(question, answer)
+        QuestionChecker.compare_answers(question, answer)
     end
 
 
