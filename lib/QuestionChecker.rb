@@ -8,7 +8,6 @@ class QuestionChecker
         @question = question
         @answer = answer
         @hints = hints
-        @user_input = ""
     end
 
     def compare_answers 
@@ -29,7 +28,8 @@ class QuestionChecker
     end
 
     def process_correct_answers
-        formatted_answers = self.answer.map do |answer|             answer.split.map(&:capitalize).join(' ')
+        formatted_answers = self.answer.map do |answer| 
+            answer.split.map(&:capitalize).join(' ')
         end
         return formatted_answers[0...3]
     end
@@ -65,7 +65,7 @@ class QuestionChecker
     end
 
     def let_user_retype
-        puts "Did you mean: #{self.possible_typo.join("").red}? Please type your answer again!"
+        puts "Did you mean: #{self.possible_typo.join(" or ").red}? Please type your answer again!"
         compare_answers
     end    
 
