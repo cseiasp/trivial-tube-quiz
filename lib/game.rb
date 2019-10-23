@@ -6,7 +6,7 @@ class Game < ActiveRecord::Base
     def self.welcome
         puts "\nTRIVIAL TUBE QUIZ\n\n"
         system('clear')
-        print_train_welcome
+        Train.print_train_welcome
         prompt = TTY::Prompt.new
         @user_input = prompt.ask("Welcome to the Trivial Tube Quiz. What is your name?")
         puts "\nHello #{@user_input} \n \n"
@@ -38,10 +38,7 @@ class Game < ActiveRecord::Base
     end
 
     def self.exit
-        #system('clear')
-        #puts "Thank you for playing, #{@user_input}. Play again soon!"
-        #print_train_exit
-        Train.moving_train(15)
+        Train.moving_train(15, "Goodbye - please mind the gap on your way out")
     end
 
     def self.display_question
@@ -58,7 +55,9 @@ class Game < ActiveRecord::Base
             sleep(1)
             play
         else
-            puts "\n --- WRONG! Your final score is #{@score} --- \n \n"
+            message = "The train has left the station because your answer was WRONG!"
+            Train.moving_train(15, message)
+            puts "\n --- Your final score is #{@score} --- \n \n"
             Score.create(user_id: @user.id, score: @score)
             return user_choice
         end
@@ -75,23 +74,8 @@ class Game < ActiveRecord::Base
         end
         puts "\n"
     end
-
-    def self.random_colour
-        [String.red, String.green, String.black, String.blue, String.magenta].sample
-    end
     
-    def self.print_train_exit
-        
-        puts "___________   _______________________________________^__        ".yellow 
-        puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\     ".green
-        puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    ".cyan
-        puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   ".blue
-        puts "           |||                    |___|___| |  |__|         )   MIND THE GAP WHILST YOU EXIT!".magenta
-        puts "___________|||______________________________|______________/    ".red
-        puts "           |||                                        /-------- ".yellow
-        puts "-----------'''---------------------------------------'          ".yellow
-        puts " \n                                             \n"
-    end
+    
     def self.print_train
         
         puts "___________   _______________________________________^__        ".yellow 
@@ -105,16 +89,7 @@ class Game < ActiveRecord::Base
         puts " \n                                             \n"
     end
     
-    def self.print_train_welcome
-        puts "________   _______________________________________^__ ".yellow
-        puts "_   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\      __      __       .__ ".green       
-        puts " | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    /  \\    /  \\ ____ |  |    ____  ____   _____   ____ ".cyan
-        puts "_| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   \\   \\/\\/   // __ \\|  |  _/ ___\\/  _ \\ /     \\_/ __ \\".blue
-        puts "        |||                    |___|___| |  |__|         )   \\        / \\ ___/|  |_ \\  \\__(  <_> )  Y Y  \\  ___/".magenta
-        puts "________|||______________________________|______________/     \\__/\\  /   \\___  >____/\\___  >____/|__|_|  /\\___  >".red
-        puts "        |||                                        /-----------    \\/        \\/          \\/            \\/     \\/  ".yellow
-        puts "--------'''---------------------------------------' ".yellow
-    end
+    
    
 
 end
