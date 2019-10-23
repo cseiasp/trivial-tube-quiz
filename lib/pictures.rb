@@ -78,6 +78,7 @@ class Pictures
     end
     # ---- end of logic for moving train ----
 
+    # banner and text for rules page, called in Game.enact_choices
     def self.rules
         system('clear')
 
@@ -101,6 +102,7 @@ class Pictures
        Game.user_choice
     end
 
+    # banner and text for leaderboard page, called in Game.view_leaderboard
     def self.the_scores
 
     puts "           __  .__                                                 ".yellow      
