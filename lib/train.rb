@@ -28,7 +28,7 @@ class Train
     end
 
     # moves the train by the gap amount a number of times
-    def self.moving_train(number, message)
+    def self.moving_train(number, message, sleep)
         
         i = 1
 
@@ -47,13 +47,13 @@ class Train
             puts "#{message}\n".yellow
             
             i += 1
-            sleep(0.5)
+            sleep(sleep)
         end
-        train_dissappears(number, message)
+        train_dissappears(number, message, sleep)
     end
 
     # makes the end characters dissapear so it looks like the train is moving out of sight
-    def self.train_dissappears(number, message)
+    def self.train_dissappears(number, message, sleep)
 
         gap2 = mind_the_gap(15)
         i = 1
@@ -73,7 +73,7 @@ class Train
             puts "#{message}\n".yellow
 
             i += 1
-            sleep(0.5)
+            sleep(sleep)
         end
     end
     # ---- end of logic for moving train ----

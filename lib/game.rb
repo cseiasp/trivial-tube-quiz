@@ -38,7 +38,7 @@ class Game < ActiveRecord::Base
     end
 
     def self.exit
-        Train.moving_train(15, "Goodbye - please mind the gap on your way out")
+        Train.moving_train(15, "Goodbye - please mind the gap on your way out!", 0.15)
     end
 
     def self.display_question
@@ -49,14 +49,14 @@ class Game < ActiveRecord::Base
 
     def self.play
         display_question
-        if @question
+        if @question == true
             @score += 1
             p "Correct! Your score is now #{@score}"
             sleep(1)
             play
-        else
+        elsif @question == false || @question == "Timer Expired"
             message = "The train has left the station because your answer was WRONG!"
-            Train.moving_train(15, message)
+            Train.moving_train(15, message, 0.08)
             puts "\n --- Your final score is #{@score} --- \n \n"
             Score.create(user_id: @user.id, score: @score)
             return user_choice
@@ -75,7 +75,6 @@ class Game < ActiveRecord::Base
         puts "\n"
     end
     
-    
     def self.print_train
         
         puts "___________   _______________________________________^__        ".yellow 
@@ -89,7 +88,4 @@ class Game < ActiveRecord::Base
         puts " \n                                             \n"
     end
     
-    
-   
-
 end

@@ -3,17 +3,35 @@ require 'pry'
 
 class Question 
 
-    
+    def self.rules
+        puts " - - - - - - - - - - - - - - - RULES OF THE GAME - - - - - - - - - - - - - - - "
+        puts "The game is simple, answer as many questions as you can correctly, but beware: \n\n"
+        puts "YOU ONLY HAVE 15 SECONDS TO ANSWER THIS QUESTION, SO HURRY! ".yellow
+        puts "Pro tip - you can ask for a hint if you need one... \n\n"
+        puts " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
+        puts "\nHERE IS YOUR QUESTION"
+    end
 
     def self.compare_answers (question, answer, hints=nil)
-        puts question
-        user_input = STDIN.gets.chomp
+        user_input = Thread.new do
+            rules
+            puts question
+            Thread.current[:value] = STDIN.gets.chomp
+        end
 
-        user_input = Hint.give_hint(hints) if user_input == "h" || user_input == "hint"
+        timer = Thread.new { sleep 15; user_input.kill; puts}
+        user_input.join
+        
+        if user_input[:value]
+            user_input= Hint.give_hint(hints) if user_input[:value] == "h" || user_input[:value] == "hint"
 
-        answer, user_input = downcase_comparison(user_input, answer)
-        answer.include?(user_input) ? win = true : win = false
-        win
+            answer, user_input = downcase_comparison(user_input[:value], answer)
+            answer.include?(user_input) ? win = true : win = false
+            timer.kill
+            return win
+        else
+            return "Timer Expired"
+        end
     end
 
     def self.downcase_comparison(user_input, answer)
