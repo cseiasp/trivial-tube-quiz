@@ -45,7 +45,7 @@ class Question
         question = "Name a Station beginning with #{letter}"
         answer = Station.station_names_by_letter(letter)
         hints = Hint.generate_begin_with_hint(answer)
-
+        
         check = QuestionChecker.new(question, answer, hints)
         check.compare_answers
     end

@@ -78,13 +78,5 @@ class QuestionChecker
         spell_checker.correct(self.user_input)
     end 
 
-    def rules
-        puts " - - - - - - - - - - - - - - - RULES OF THE GAME - - - - - - - - - - - - - - - "
-        puts "The game is simple, answer as many questions as you can correctly, but beware: \n\n"
-        puts "YOU ONLY HAVE 15 SECONDS TO ANSWER THIS QUESTION, SO HURRY! ".yellow
-        puts "Pro tip - you can ask for a hint if you need one... \n\n"
-        puts " - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - "
-        puts "\nHERE IS YOUR QUESTION"
-    end
-
+    
 end
