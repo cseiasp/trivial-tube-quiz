@@ -3,35 +3,54 @@ require_relative '../config/environment'
 
 class Game < ActiveRecord::Base  
     
+
     def self.welcome
-        puts "\nTRIVIAL TUBE QUIZ\n\n"
-        system('clear')
-        Train.print_train_welcome
+        Pictures.print_train_welcome
+        ask_for_name
+        user_choice
+    end
+
+    # helper method for welcome an user choice
+    def self.prompt
         prompt = TTY::Prompt.new
+    end
+
+    #helper method for welcome using self.prompt
+    def self.ask_for_name
         @user_input = prompt.ask("Welcome to the Trivial Tube Quiz. What is your name?")
         puts "\nHello #{@user_input} \n \n"
         @user = User.find_or_create_by(username: @user_input)
-        user_choice
     end
     
     def self.user_choice
-    prompt = TTY::Prompt.new
-    choices = ["Play", "Rules of The Game", "View Leaderboard", "Change User", "Exit"]
-    @user_choice = prompt.select("What would you like to do?", choices)
+        provide_choices
+        enact_choice
+    end
+    
+    # provides the choices for the menu and stores answer using self.prompt
+    def self.provide_choices
+        choices = ["Play", "Rules of The Game", "View Leaderboard", "Change User", "Exit"]
+        @user_choice = prompt.select("What would you like to do?", choices)
+        end
+
+
+    # tells you what to do for each choice     
+    def self.enact_choice
         if @user_choice == "Play"
-                    @score = 0
-                    play
-                elsif @user_choice == "View Leaderboard" 
-                    view_leaderboard
-                elsif @user_choice == "Change User" 
-                    welcome
-                elsif @user_choice == "Exit" 
-                    exit
-                else
-                    rules
+            @score = 0
+            play
+        elsif @user_choice == "View Leaderboard" 
+            view_leaderboard
+        elsif @user_choice == "Change User" 
+            welcome
+        elsif @user_choice == "Exit" 
+            exit
+        else
+            Pictures.rules
         end
     end
 
+    # if leaderboard is selected, the leaderboard is printed, user is asked to play again
     def self.view_leaderboard
         system('clear')
         puts "Checking the leaderboard...\n"
@@ -39,43 +58,78 @@ class Game < ActiveRecord::Base
         user_choice
     end
 
+    # if exit is selected, train says goodbye and leaves
     def self.exit
-        Train.moving_train(15, "Goodbye - please mind the gap on your way out!", 0.1)
+        Pictures.moving_train(15, "Goodbye - please mind the gap on your way out!", 0.1)
     end
 
+    # prints a pretty train and asks a randomly selected tube question
     def self.display_question
         system('clear')
         print_train
         @question = Question.ask_random_question
     end
 
+
     def self.play
         display_question
         if @question == true
-            @score += 1
-            puts "\nCorrect! Your score is now #{@score}".yellow
-            sleep(1)
-            play
+            answer_was_correct_so_play_again
         else 
-            if @question == "Timer Expired"
-                message = "Oh no! The train has left the station because you were too slow!"
-            else 
-                message = "Oh no! The train has left the station because your answer was WRONG! \nThe correct answer(s): #{@question.join(". ")}."
-            end
-            Train.moving_train(15, message, 0.08)
-            puts "--- Your final score is #{@score.to_s.yellow} --- \n \n"
-            Score.create(user_id: @user.id, score: @score)
-            user_choice
+            answer_was_wrong_round_ended
         end
     end
     
-    def self.print_leaderboard
-        the_scores
-        scores = Score.all.sort_by{|score| -score.score.to_i}[0...10]
-        puts "\n"
-        printf("                   %-20s %-20s %-20s\n\n", "Position", "Username", "Score")
+    # if the answer was correct, score is increased and displayed, user gets another question
+    def self.answer_was_correct_so_play_again
+        @score += 1
+        puts "\nCorrect! Your score is now #{@score}".yellow
+        sleep(1)
+        play
+    end
     
-        scores.each_with_index do | score, index |
+    # if the answer was wrong, train leaves, score is displayed and saved, user gets choices again
+    def self.answer_was_wrong_round_ended
+        Pictures.moving_train(15, end_message, 0.08)
+        save_and_display_score
+        user_choice
+    end
+    
+    # score gets saved and displayed
+    def self.save_and_display_score
+        Score.create(user_id: @user.id, score: @score)
+        puts "--- Your final score is #{@score.to_s.yellow} --- \n \n"
+    end
+    
+    # depending on why the user lost, a custom message is displayed when the train moves
+    def self.end_message
+        if @question == "Timer Expired"
+            return message = "Oh no! The train has left the station because you were too slow!"
+        else 
+            return message = "Oh no! The train has left the station because your answer was WRONG! \nThe correct answer(s): #{@question.join(". ")}."
+        end  
+    end
+    
+    def self.print_leaderboard
+        Pictures.the_scores
+        sort_scores
+        print_headers
+        print_scores
+    end
+    
+    # sorts the scores and selects the top 10
+    def self.sort_scores
+        Score.all.sort_by{|score| -score.score.to_i}[0...10]
+    end
+    
+    # prints the headers of the leaderboard with a line 
+    def self.print_headers
+        printf("\n                   %-20s %-20s %-20s\n\n", "Position", "Username", "Score")
+    end
+    
+    # prints the top scores on the leaderboard under the headers
+    def self.print_scores
+        sort_scores.each_with_index do | score, index |
             username = User.find_by(id: score.user_id).username
             printf("                   %-20s %-20s %-20s\n", index + 1, username, score.score)
         end
@@ -83,7 +137,7 @@ class Game < ActiveRecord::Base
     end
     
     def self.print_train
-        
+        system('clear')
         puts "___________   _______________________________________^__        ".yellow 
         puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\     ".green
         puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    ".cyan
@@ -94,40 +148,5 @@ class Game < ActiveRecord::Base
         puts "-----------'''---------------------------------------'          ".yellow
         puts " \n                                             \n"
     end
-
-    def self.rules
-        system('clear')
-
-        puts "                    __  .__                            .__                   ".yellow
-        puts "                  _/  |_|  |__   ____     _______ __ __|  |   ____   ______".green
-        puts "                  \\   __\\  |  \\_/ __   \\  \\_  __ \\  |  \\  | _/ __ \\ /  ___/".cyan
-        puts "                   |  | |   Y  \\  ___/     |  | \\/  |  /  |_\\  ___/ \\___ \\ ".blue
-        puts "                   |__| |___|  /\___  >     |__|  |____/|____/\\___  >____  >".magenta
-        puts "                             \\/     \\/                           \\/     \\/ ".red
-
-        puts "\n
-        Do you think you know London pretty well? Fancy yourself a true Londoner? Well 
-        why don't you play are game and show off your knowledge! \n \n
-                                         INSTRUCTIONS
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
-        The game is simple, answer as many questions as you can correctly, but beware:"
-        puts "        YOU ONLY HAVE 15 SECONDS TO ANSWER EACH QUESTION, SO HURRY!".red
-        puts "        (Pro tip - you can ask for a hint if you need one...)
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n \n \n"
-
-       user_choice
-    end
-
-    def self.the_scores
-
-    puts "           __  .__                                                 ".yellow      
-    puts "         _/  |_|  |__   ____        ______ ____  ___________   ____   ______".green
-    puts "         \\   __\\  |  \\_/ __ \\      /  ___// ___\\/  _ \\_  __ \\_/ __ \\ /  ___/".cyan
-    puts "          |  | |   Y  \\  ___/      \\___ \\\\  \\__(  <_> )  | \\/\\  ___/ \\___ \\ ".blue
-    puts "          |__| |___|  /\\___  >     /____  >\___  >____/|__|    \\___  >____  >".magenta
-    puts "                    \\/     \\/           \\/     \\/                 \\/     \\/ ".red
-
-    end
-
     
 end

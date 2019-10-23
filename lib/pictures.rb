@@ -1,9 +1,10 @@
 require_relative '../config/environment'
 
-class Train 
+class Pictures
 
     # Welcome banner
     def self.print_train_welcome
+        system('clear')
         puts "________   _______________________________________^__ ".yellow
         puts "_   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\      __      __       .__ ".green       
         puts " | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    /  \\    /  \\ ____ |  |    ____  ____   _____   ____ ".cyan
@@ -44,7 +45,6 @@ class Train
             puts "#{gap}___________|||______________________________|______________/    ".red
             puts "#{gap}           |||                                        /-------- ".yellow
             puts "#{gap}-----------'''---------------------------------------'          ".yellow
-            puts "#{message}\n".yellow
             
             i += 1
             sleep(sleep)
@@ -70,13 +70,47 @@ class Train
             puts "#{gap}___________|||______________________________|______________/    "[0...-5*i].red
             puts "#{gap}           |||                                        /-------- "[0...-5*i].yellow
             puts "#{gap}-----------'''---------------------------------------'          "[0...-5*i].yellow
-            puts "#{message}\n".yellow
-
+            
             i += 1
             sleep(sleep)
         end
+        puts "#{message}\n".yellow
     end
     # ---- end of logic for moving train ----
+
+    def self.rules
+        system('clear')
+
+        puts "                    __  .__                            .__                   ".yellow
+        puts "                  _/  |_|  |__   ____     _______ __ __|  |   ____   ______".green
+        puts "                  \\   __\\  |  \\_/ __   \\  \\_  __ \\  |  \\  | _/ __ \\ /  ___/".cyan
+        puts "                   |  | |   Y  \\  ___/     |  | \\/  |  /  |_\\  ___/ \\___ \\ ".blue
+        puts "                   |__| |___|  /\___  >     |__|  |____/|____/\\___  >____  >".magenta
+        puts "                             \\/     \\/                           \\/     \\/ ".red
+
+        puts "\n
+        Do you think you know London pretty well? Fancy yourself a true Londoner? Well 
+        why don't you play are game and show off your knowledge! \n \n
+                                         INSTRUCTIONS
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        The game is simple, answer as many questions as you can correctly, but beware:"
+        puts "        YOU ONLY HAVE 15 SECONDS TO ANSWER EACH QUESTION, SO HURRY!".red
+        puts "        (Pro tip - you can ask for a hint if you need one...)
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n \n \n"
+
+       Game.user_choice
+    end
+
+    def self.the_scores
+
+    puts "           __  .__                                                 ".yellow      
+    puts "         _/  |_|  |__   ____        ______ ____  ___________   ____   ______".green
+    puts "         \\   __\\  |  \\_/ __ \\      /  ___// ___\\/  _ \\_  __ \\_/ __ \\ /  ___/".cyan
+    puts "          |  | |   Y  \\  ___/      \\___ \\\\  \\__(  <_> )  | \\/\\  ___/ \\___ \\ ".blue
+    puts "          |__| |___|  /\\___  >     /____  >\___  >____/|__|    \\___  >____  >".magenta
+    puts "                    \\/     \\/           \\/     \\/                 \\/     \\/ ".red
+
+    end
 
 
     
