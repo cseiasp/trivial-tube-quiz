@@ -16,7 +16,7 @@ class Game < ActiveRecord::Base
     
     def self.user_choice
     prompt = TTY::Prompt.new
-    choices = ["Rules of The Game", "Play","View Leaderboard", "Change User", "Exit"]
+    choices = ["Play", "Rules of The Game", "View Leaderboard", "Change User", "Exit"]
     @user_choice = prompt.select("What would you like to do?", choices)
         if @user_choice == "Play"
                     @score = 0
@@ -97,18 +97,18 @@ class Game < ActiveRecord::Base
     def self.rules
         system('clear')
 
-        puts "  __  .__                            .__                   ".yellow
-        puts "_/  |_|  |__   ____     _______ __ __|  |   ____   ______".green
-        puts "\\   __\\  |  \\_/ __   \\  \\_  __ \\  |  \\  | _/ __ \\ /  ___/".cyan
-        puts " |  | |   Y  \\  ___/     |  | \\/  |  /  |_\\  ___/ \\___ \\ ".blue
-        puts " |__| |___|  /\___  >     |__|  |____/|____/\\___  >____  >".magenta
-        puts "           \\/     \\/                           \\/     \\/ ".red
+        puts "                    __  .__                            .__                   ".yellow
+        puts "                  _/  |_|  |__   ____     _______ __ __|  |   ____   ______".green
+        puts "                  \\   __\\  |  \\_/ __   \\  \\_  __ \\  |  \\  | _/ __ \\ /  ___/".cyan
+        puts "                   |  | |   Y  \\  ___/     |  | \\/  |  /  |_\\  ___/ \\___ \\ ".blue
+        puts "                   |__| |___|  /\___  >     |__|  |____/|____/\\___  >____  >".magenta
+        puts "                             \\/     \\/                           \\/     \\/ ".red
 
         puts "\n
-        Do you think you know London pretty well? Fancy yourself a true Londoner?
-        Well why don't you play are game and show off your knowledge! \n \n
+        Do you think you know London pretty well? Fancy yourself a true Londoner? Well 
+        why don't you play are game and show off your knowledge! \n \n
                                          INSTRUCTIONS
-        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+        - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
         The game is simple, answer as many questions as you can correctly, but beware:"
         puts "        YOU ONLY HAVE 15 SECONDS TO ANSWER EACH QUESTION, SO HURRY!".red
         puts "        (Pro tip - you can ask for a hint if you need one...)
