@@ -88,7 +88,7 @@ class Game < ActiveRecord::Base
         puts " ___   ___ |||  ___   ___   ___    ___ ___  |   __  ,----\\     ".green
         puts "|   | |   |||| |   | |   | |   |  |   |   | |  |  | |_____\\    ".cyan
         puts "|___| |___|||| |___| |___| |___|  | O | O | |  |  |        \\   Don't miss the stop!".blue
-        puts "           |||                    |___|___| |  |__|         )   You are currently on stop #{@score}.".magenta
+        puts "           |||                    |___|___| |  |__|         )   You are currently on stop #{@score.to_s.yellow}.".magenta
         puts "___________|||______________________________|______________/    ".red
         puts "           |||                                        /-------- ".yellow
         puts "-----------'''---------------------------------------'          ".yellow
